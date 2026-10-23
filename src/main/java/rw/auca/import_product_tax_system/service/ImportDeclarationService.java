@@ -1,5 +1,6 @@
 package rw.auca.import_product_tax_system.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -73,6 +74,13 @@ public class ImportDeclarationService {
     public List< ImportDeclaration> getByStatus(DeclarationStatus status)
     {
         return importDeclarationRepository.findByStatusOrderByDeclarationDateAsc(status);
+    }
+
+    // FIND DECLARATION BETWEEN TWO DATE 
+
+    public List <ImportDeclaration> getBetween(LocalDate start , LocalDate end)
+    {
+        return importDeclarationRepository.findByDeclarationDateBetweenOrderByDeclarationDateAsc(start, end);
     }
 
 }

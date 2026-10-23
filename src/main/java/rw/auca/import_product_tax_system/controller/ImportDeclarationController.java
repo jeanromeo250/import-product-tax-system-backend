@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -91,6 +92,16 @@ public class ImportDeclarationController {
         return new ResponseEntity<>(importDeclarationService.getByStatus(status) , HttpStatus.OK);
     }
 
+    @GetMapping ("/between")
 
-    
+    public  ResponseEntity<List<ImportDeclaration>> getBetween(@RequestParam String start , @RequestParam String end)
+    {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+
+        return new ResponseEntity<>(importDeclarationService.getBetween(startDate , endDate) , HttpStatus.OK);
+    }
+
+
+
 }

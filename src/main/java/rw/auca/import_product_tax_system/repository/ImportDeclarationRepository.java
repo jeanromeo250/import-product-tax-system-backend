@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import rw.auca.import_product_tax_system.domain.CustomsOfficer;
 import rw.auca.import_product_tax_system.domain.DeclarationStatus;
 import rw.auca.import_product_tax_system.domain.ImportDeclaration;
 
@@ -13,5 +14,8 @@ public interface ImportDeclarationRepository extends JpaRepository <ImportDeclar
     
     List <ImportDeclaration> findByStatusOrderByDeclarationDateAsc(DeclarationStatus status);
     List <ImportDeclaration> findByDeclarationDateBetweenOrderByDeclarationDateAsc(LocalDate start , LocalDate end);
-    
+
+
+    boolean existsByCustomsOfficerAndDeclarationDateAndStatusNot(CustomsOfficer customsOfficer , LocalDate declarationDate , DeclarationStatus status);
+
 }

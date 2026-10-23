@@ -32,8 +32,21 @@ public class ImportDeclarationController {
     @PostMapping ("/save")
     public ResponseEntity<String> save (@RequestBody ImportDeclaration importDeclaration)
     {
+
+    
         String message = importDeclarationService.save(importDeclaration);
-        return new ResponseEntity<>(message , HttpStatus.CREATED);
+
+        if(message.equals("Import declaratiom date can not be in past"))
+        {
+            return new ResponseEntity<>(message , HttpStatus.BAD_REQUEST);
+        }
+
+        if(message.equals("Customs officer already has a declaration on that date "))
+        {
+            return new ResponseEntity<>(message , HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
     @GetMapping ("/all")

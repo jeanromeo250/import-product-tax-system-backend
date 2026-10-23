@@ -20,9 +20,25 @@ public class ImportDeclarationService {
 
     public String save(ImportDeclaration importDeclaration)
     {
+      if(importDeclaration.getDeclarationDate().isBefore(LocalDate.now()))
+      {
+        return "Import declaration date can not be in the past";
+      }
+
+      if(importDeclarationRepository.existsByCustomsOfficerAndDeclarationDateAndStatusNot(
+        importDeclaration.getCustomsOfficer(),
+        importDeclaration.getDeclarationDate(),
+        DeclarationStatus.REJECTED))
+        {
+            return  "Customs officer already has a declaration on that date";
+        }
+
+        importDeclaration.setStatus(DeclarationStatus.SUBMITTED);
         importDeclarationRepository.save(importDeclaration);
         return "Import declaration saved successfully";
+
     }
+
 
     public List <ImportDeclaration> getAll()
     {

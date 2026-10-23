@@ -99,4 +99,36 @@ public class ImportDeclarationService {
         return importDeclarationRepository.findByDeclarationDateBetweenOrderByDeclarationDateAsc(start, end);
     }
 
+
+
+    public String updateStatus (UUID id , DeclarationStatus newStatus)
+    {
+        Optional <ImportDeclaration> found = importDeclarationRepository.findById(id);
+
+        if(found.isEmpty())
+        {
+            return "The import declaration with that id does not exist";
+        }
+
+        ImportDeclaration importDeclaration = found.get();
+        DeclarationStatus current = importDeclaration.getStatus();
+
+        boolean allowed = (current == DeclarationStatus.SUBMITTED && (newStatus == DeclarationStatus.UNDER_ASSESSMENT || newStatus == DeclarationStatus.REJECTED))
+
+                         || (current == DeclarationStatus.UNDER_ASSESSMENT && (newStatus == DeclarationStatus.CLEARED || newStatus == DeclarationStatus.REJECTED));
+
+       
+        if (!allowed) {
+            return  "Con not change status from " + current + "to " +newStatus;
+            
+        }
+
+        importDeclaration.setStatus(newStatus);
+        importDeclarationRepository.save(importDeclaration);
+        return "Import declaration status updated successfully";
+                        
+                           
+        
+    }
+
 }

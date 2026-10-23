@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rw.auca.import_product_tax_system.domain.Importer;
+import rw.auca.import_product_tax_system.service.CustomsOfficerService;
 import rw.auca.import_product_tax_system.service.ImporterService;
 
 @RestController 
@@ -27,6 +28,10 @@ public class ImporterController {
     
     @Autowired 
     private ImporterService importerService;
+
+    @Autowired 
+    private CustomsOfficerService customsOfficerService;
+
 
     @PostMapping ("/save")
     public ResponseEntity<String> save(@RequestBody Importer importer)
@@ -89,6 +94,18 @@ public class ImporterController {
     public  ResponseEntity<List<Importer>> getByCompanyName(@RequestParam String companyName)
     {
         return  new ResponseEntity<>(importerService.getByCompanyName(companyName),HttpStatus.OK);
+    }
+
+
+    @GetMapping ("/of-customs-officer/{customsOfficerId}")
+    public ResponseEntity <Object> getByCustomsOfficer(@PathVariable UUID customsOfficerId)
+    {
+        if(customsOfficerService.getBtId(customsOfficerId).isEmpty())
+        {
+            return  new ResponseEntity<>("The customs officer with that id does not exist" , HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(importerService.getByCustomsOfficer(customsOfficerId) , HttpStatus.OK);
     }
 
 

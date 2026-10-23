@@ -73,4 +73,11 @@ public class ImporterService {
         return importerRepository.findByCompanyNameIgnoreCaseOrderByContactPersonAsc(companyName);
     }
 
+
+
+    public List <Importer> getByCustomsOfficer (UUID customerOfficerId)
+    {
+        return importerRepository.findImportersByCustomsOfficer(customerOfficerId);
+    }
+
 }

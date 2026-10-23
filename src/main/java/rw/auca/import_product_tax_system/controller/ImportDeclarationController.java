@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import rw.auca.import_product_tax_system.domain.DeclarationStatus;
 import rw.auca.import_product_tax_system.domain.ImportDeclaration;
 import rw.auca.import_product_tax_system.service.ImportDeclarationService;
 
@@ -81,4 +83,14 @@ public class ImportDeclarationController {
 
 
     }
+
+
+    @GetMapping ("/by-status")
+    public ResponseEntity<List<ImportDeclaration>> getByStatus(@RequestParam DeclarationStatus status)
+    {
+        return new ResponseEntity<>(importDeclarationService.getByStatus(status) , HttpStatus.OK);
+    }
+
+
+    
 }

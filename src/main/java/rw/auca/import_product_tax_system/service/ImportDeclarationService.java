@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import rw.auca.import_product_tax_system.domain.DeclarationStatus;
 import rw.auca.import_product_tax_system.domain.ImportDeclaration;
 import rw.auca.import_product_tax_system.repository.ImportDeclarationRepository;
 
@@ -66,4 +67,12 @@ public class ImportDeclarationService {
         importDeclarationRepository.deleteById(id);
         return  "Import declaration deleted successfully";
     }
+
+    // FIND THE IMPORTED DECLARATION BY ORDER STATUS (APPROVED ,REJECTED OR ANOTHER )
+
+    public List< ImportDeclaration> getByStatus(DeclarationStatus status)
+    {
+        return importDeclarationRepository.findByStatusOrderByDeclarationDateAsc(status);
+    }
+
 }

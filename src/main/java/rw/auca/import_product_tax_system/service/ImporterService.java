@@ -67,4 +67,10 @@ public class ImporterService {
 
     }
 
+
+    public List<Importer> getByCompanyName (String companyName)
+    {
+        return importerRepository.findByCompanyNameIgnoreCaseOrderByContactPersonAsc(companyName);
+    }
+
 }

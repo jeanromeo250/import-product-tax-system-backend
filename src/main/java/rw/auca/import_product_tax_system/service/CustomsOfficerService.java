@@ -63,4 +63,10 @@ public class CustomsOfficerService {
         customsOfficerRepository.deleteById(id);
         return "Customs officer delete successfully";
     }
+
+
+    public List <CustomsOfficer> getByProductCategory(String name)
+    {
+        return customsOfficerRepository.findByProductCategoryName(name);
+    }
 }

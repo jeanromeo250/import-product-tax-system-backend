@@ -15,6 +15,6 @@ public interface CustomsOfficerRepository  extends  JpaRepository <CustomsOffice
 
     @Query("SELECT o FROM CustomsOfficer o JOIN o.productCategories c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<CustomsOfficer> findByProductCategoryName(@Param("name") String name);
-    
+
 }
 

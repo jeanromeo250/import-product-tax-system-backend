@@ -86,6 +86,14 @@ public class InspectionBayController {
 
 
 
+    @GetMapping ("/free")
+    public ResponseEntity <List<InspectionBay>> getFree()
+    {
+        
+        return  new ResponseEntity<>(inspectionBayService.getFree(),HttpStatus.OK);
+    }
+
+
 
 
 

@@ -60,5 +60,10 @@ public class InspectionBayService {
         return  "Inspection  bay deleted successfully.";
     }
 
+    public List <InspectionBay> getFree()
+    {
+        return inspectionBayRepository.findFreeInspectionBays();
+    }
+
 
 }

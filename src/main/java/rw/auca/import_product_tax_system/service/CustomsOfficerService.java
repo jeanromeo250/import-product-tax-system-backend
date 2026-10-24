@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rw.auca.import_product_tax_system.domain.CustomsOfficer;
+import rw.auca.import_product_tax_system.domain.InspectionBay;
 import rw.auca.import_product_tax_system.domain.ProductCategory;
 import rw.auca.import_product_tax_system.repository.CustomsOfficerRepository;
+import rw.auca.import_product_tax_system.repository.InspectionBayRepository;
 import rw.auca.import_product_tax_system.repository.ProductCategoryRepository;
 
 @Service 
@@ -22,6 +24,9 @@ public class CustomsOfficerService {
     @Autowired 
     private ProductCategoryRepository productCategoryRepository;
 
+    @Autowired 
+    private InspectionBayRepository inspectionBayRepository;
+
     public String save (CustomsOfficer customsOfficer)
     {
         customsOfficerRepository.save(customsOfficer);
@@ -33,7 +38,7 @@ public class CustomsOfficerService {
         return customsOfficerRepository.findAll();
     }
 
-    public Optional<CustomsOfficer> getById(UUID id)
+    public Optional<CustomsOfficer> getById(UUID id) 
     {
         return customsOfficerRepository.findById(id);
     }
@@ -76,31 +81,67 @@ public class CustomsOfficerService {
     }
 
 
-public String addProductCategory(UUID customsOfficerId, UUID productCategoryId)
-{
-    Optional<CustomsOfficer> officerFound = customsOfficerRepository.findById(customsOfficerId);
+    public String addProductCategory(UUID customsOfficerId, UUID productCategoryId)
+    {
+        Optional<CustomsOfficer> officerFound = customsOfficerRepository.findById(customsOfficerId);
 
-    if (officerFound.isEmpty()) {
-        return "The customs officer with that id does not exist";
+        if (officerFound.isEmpty()) {
+            return "The customs officer with that id does not exist";
+        }
+
+        Optional<ProductCategory> categoryFound = productCategoryRepository.findById(productCategoryId);
+
+        if (categoryFound.isEmpty()) {
+            return "That product category does not exist";
+        }
+
+        CustomsOfficer customsOfficer = officerFound.get();
+        ProductCategory productCategory = categoryFound.get();
+
+        if (customsOfficer.getProductCategories().contains(productCategory)) {
+             return "The customs officer already has that product category";
+        }
+
+        customsOfficer.getProductCategories().add(productCategory);
+        customsOfficerRepository.save(customsOfficer);
+        return "Product category added to the customs officer";
     }
 
-    Optional<ProductCategory> categoryFound = productCategoryRepository.findById(productCategoryId);
 
-    if (categoryFound.isEmpty()) {
-        return "That product category does not exist";
+    public String changeInspectionBay(UUID customsOfficerId , int bayNumber)
+    {
+        Optional <CustomsOfficer> officerFound = customsOfficerRepository.findById(customsOfficerId);
+
+        if(officerFound.isEmpty())
+        {
+            return "The customs officer with that id does not exist";
+
+        }
+
+        Optional<InspectionBay> bayFound = inspectionBayRepository.findByBayNumber(bayNumber);
+
+        if(bayFound.isEmpty())
+        {
+            return "The inspection bay with that bayNumber does not exist";
+        }
+
+        CustomsOfficer customsOfficer = officerFound.get();
+        InspectionBay inspectionBay = bayFound.get();
+
+        boolean alreadyHisBay = customsOfficer.getInspectionBay() != null && customsOfficer.getInspectionBay().getId().equals(inspectionBay.getId());
+
+        if(!alreadyHisBay && customsOfficerRepository.existsByInspectionBay(inspectionBay))
+        {
+            return "The inspection bay is taken by another customs officer";
+        }
+
+        customsOfficer.setInspectionBay(inspectionBay);
+        customsOfficerRepository.save(customsOfficer);
+
+        return "Inspection bay changed successfully";
     }
 
-    CustomsOfficer customsOfficer = officerFound.get();
-    ProductCategory productCategory = categoryFound.get();
 
-    if (customsOfficer.getProductCategories().contains(productCategory)) {
-        return "The customs officer already has that product category";
-    }
-
-    customsOfficer.getProductCategories().add(productCategory);
-    customsOfficerRepository.save(customsOfficer);
-    return "Product category added to the customs officer";
-}
 
 
 }

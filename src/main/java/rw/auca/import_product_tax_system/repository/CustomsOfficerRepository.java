@@ -10,11 +10,16 @@ import org.springframework.data.repository.query.Param;
 import  java.util.List;
 
 import rw.auca.import_product_tax_system.domain.CustomsOfficer;
+import rw.auca.import_product_tax_system.domain.InspectionBay;
 
 public interface CustomsOfficerRepository  extends  JpaRepository <CustomsOfficer , UUID>{
 
     @Query("SELECT o FROM CustomsOfficer o JOIN o.productCategories c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<CustomsOfficer> findByProductCategoryName(@Param("name") String name);
+
+    boolean existsByInspectionBay(InspectionBay inspectionBay);
+
+    
 
 }
 

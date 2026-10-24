@@ -100,18 +100,12 @@ public class ImporterController {
     @GetMapping ("/of-customs-officer/{customsOfficerId}")
     public ResponseEntity <Object> getByCustomsOfficer(@PathVariable UUID customsOfficerId)
     {
-        if(customsOfficerService.getBtId(customsOfficerId).isEmpty())
+        if(customsOfficerService.getById(customsOfficerId).isEmpty())
         {
             return  new ResponseEntity<>("The customs officer with that id does not exist" , HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>(importerService.getByCustomsOfficer(customsOfficerId) , HttpStatus.OK);
     }
-
-
-
-    
-
-
 
 }

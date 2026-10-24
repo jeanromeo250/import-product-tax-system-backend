@@ -20,7 +20,7 @@ import rw.auca.import_product_tax_system.domain.CustomsOfficer;
 import rw.auca.import_product_tax_system.service.CustomsOfficerService;
 
 @RestController 
-@RequestMapping  ("/api/customsOfficers")
+@RequestMapping  ("/api/customs-officers")
 public class CustomsOfficerController {
 
     @Autowired 
@@ -43,7 +43,7 @@ public class CustomsOfficerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getById(@PathVariable UUID id) {
-        Optional<CustomsOfficer> found = customsOfficerService.getBtId(id);
+        Optional<CustomsOfficer> found = customsOfficerService.getById(id);
 
         if (found.isEmpty()) {
             return new ResponseEntity<>("The customs officer with that id does not exist", HttpStatus.NOT_FOUND);
@@ -56,7 +56,7 @@ public class CustomsOfficerController {
     public ResponseEntity<String> update (@PathVariable UUID id ,@RequestBody CustomsOfficer customsOfficer )
     {
         String message = customsOfficerService.update(id, customsOfficer);
-        if(message.equals("The customs Officer with that id does not exist"))
+        if(message.equals("The customs officer with that id does not exist"))
         {
             return new ResponseEntity<>(message , HttpStatus.NOT_FOUND);
         }
@@ -69,7 +69,7 @@ public class CustomsOfficerController {
     public ResponseEntity <String> delete (@PathVariable  UUID id)
     {
         String message = customsOfficerService.delete(id);
-        if(message.equals("The customs officer"))
+        if(message.equals("The customs officer with that id does not exist "))
         {
             return new ResponseEntity<>(message , HttpStatus.NOT_FOUND);
         }
@@ -81,6 +81,27 @@ public class CustomsOfficerController {
     public ResponseEntity<List<CustomsOfficer>> getByProductCategory(@RequestParam  String name)
     {
         return new ResponseEntity<>(customsOfficerService.getByProductCategory(name) , HttpStatus.OK);
+    }
+
+
+    @PutMapping ("/{customsOfficerId}/product-categories/{productCategoryId}")
+    
+    public  ResponseEntity<String> addProductCategory(@PathVariable  UUID customsOfficerId , @PathVariable UUID productCategoryId)
+    {
+        String message =  customsOfficerService.addProductCategory(customsOfficerId, productCategoryId);
+
+        if(message.equals("The customs officer with that id does not exist") || message.equals("That product category does not exist"))
+        {
+
+            return new ResponseEntity<>(message , HttpStatus.NOT_FOUND);
+        }
+
+        if(message.equals("The customs officer already has that product category"))
+        {
+            return new ResponseEntity<>(message , HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<>(message , HttpStatus.OK);
     }
 
 

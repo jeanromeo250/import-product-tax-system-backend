@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rw.auca.import_product_tax_system.domain.CustomsOfficer;
+import rw.auca.import_product_tax_system.domain.ProductCategory;
 import rw.auca.import_product_tax_system.repository.CustomsOfficerRepository;
+import rw.auca.import_product_tax_system.repository.ProductCategoryRepository;
 
 @Service 
 public class CustomsOfficerService {
@@ -16,6 +18,9 @@ public class CustomsOfficerService {
 
     @Autowired 
     private  CustomsOfficerRepository customsOfficerRepository;
+
+    @Autowired 
+    private ProductCategoryRepository productCategoryRepository;
 
     public String save (CustomsOfficer customsOfficer)
     {
@@ -28,7 +33,7 @@ public class CustomsOfficerService {
         return customsOfficerRepository.findAll();
     }
 
-    public Optional<CustomsOfficer> getBtId(UUID id)
+    public Optional<CustomsOfficer> getById(UUID id)
     {
         return customsOfficerRepository.findById(id);
     }
@@ -69,4 +74,33 @@ public class CustomsOfficerService {
     {
         return customsOfficerRepository.findByProductCategoryName(name);
     }
+
+
+public String addProductCategory(UUID customsOfficerId, UUID productCategoryId)
+{
+    Optional<CustomsOfficer> officerFound = customsOfficerRepository.findById(customsOfficerId);
+
+    if (officerFound.isEmpty()) {
+        return "The customs officer with that id does not exist";
+    }
+
+    Optional<ProductCategory> categoryFound = productCategoryRepository.findById(productCategoryId);
+
+    if (categoryFound.isEmpty()) {
+        return "That product category does not exist";
+    }
+
+    CustomsOfficer customsOfficer = officerFound.get();
+    ProductCategory productCategory = categoryFound.get();
+
+    if (customsOfficer.getProductCategories().contains(productCategory)) {
+        return "The customs officer already has that product category";
+    }
+
+    customsOfficer.getProductCategories().add(productCategory);
+    customsOfficerRepository.save(customsOfficer);
+    return "Product category added to the customs officer";
+}
+
+
 }

@@ -32,4 +32,9 @@ public interface ImportDeclarationRepository extends JpaRepository <ImportDeclar
               @Param("customsOfficerId") UUID customsOfficerId,
               @Param("date") LocalDate date,
               @Param("clearedStatus") DeclarationStatus clearedStatus);
+
+              
+    
+    long countByDeclarationDate(LocalDate declarationDate);
+    long countByStatus(DeclarationStatus status);
 }

@@ -1,6 +1,8 @@
 package rw.auca.import_product_tax_system.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 import java.time.LocalDate;
 import java.util.List;
@@ -155,6 +161,18 @@ public class ImportDeclarationController {
     }
     
 
+
+
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<ImportDeclaration>> getPage(@RequestParam int page, @RequestParam int size, @RequestParam String sort)
+    {
+        String[] parts = sort.split(",");
+        Sort.Direction direction = (parts.length > 1 && parts[1].equalsIgnoreCase("desc")) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, parts[0]));
+
+        return new ResponseEntity<>(importDeclarationService.getPage(pageable), HttpStatus.OK);
+    }
     
 
 

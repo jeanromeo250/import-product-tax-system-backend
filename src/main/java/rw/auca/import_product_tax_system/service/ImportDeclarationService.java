@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -153,6 +157,13 @@ public class ImportDeclarationService {
     {
         int count = importDeclarationRepository.cancelDay(DeclarationStatus.REJECTED, customsOfficerId, date, DeclarationStatus.CLEARED);
         return  count + "import declaration cancelled";
+    }
+
+
+    public Page<ImportDeclaration> getPage(Pageable pageable)
+    {
+
+        return importDeclarationRepository.findAll(pageable);
     }
 
 

@@ -140,4 +140,22 @@ public class ImportDeclarationController {
 
     }
 
+
+    @GetMapping ("/status/by-status")
+    public ResponseEntity<List<Object[]>> getStatsByStatus()
+    {
+        return new ResponseEntity<>(importDeclarationService.getStatsByStatus() ,HttpStatus.OK);
+    }
+
+    @PatchMapping("/cancel-day")
+    public ResponseEntity<String> cancelDay(@RequestParam UUID customsOfficerId, @RequestParam String date)
+    {
+        LocalDate day = LocalDate.parse(date);
+        return new ResponseEntity<>(importDeclarationService.cancelDay(customsOfficerId, day), HttpStatus.OK);
+    }
+    
+
+    
+
+
 }

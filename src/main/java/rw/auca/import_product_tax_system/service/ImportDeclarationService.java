@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import rw.auca.import_product_tax_system.domain.DeclarationStatus;
 import rw.auca.import_product_tax_system.domain.ImportDeclaration;
@@ -138,10 +139,21 @@ public class ImportDeclarationService {
         importDeclarationRepository.save(importDeclaration);
         return "Import declaration status updated successfully";
                         
-                           
-        
     }
 
+
+    public List<Object[]> getStatsByStatus()
+    {
+        return  importDeclarationRepository.countDeclarationsPerStatus();
+    }
+
+
+    @Transactional 
+    public  String cancelDay(UUID customsOfficerId, LocalDate date)
+    {
+        int count = importDeclarationRepository.cancelDay(DeclarationStatus.REJECTED, customsOfficerId, date, DeclarationStatus.CLEARED);
+        return  count + "import declaration cancelled";
+    }
 
 
 

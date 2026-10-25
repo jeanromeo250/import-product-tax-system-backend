@@ -1,6 +1,7 @@
 package rw.auca.import_product_tax_system.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,11 +39,16 @@ public class TaxAssessmentService {
             return "Tax assessment are only for CLEARED import declarations";
         }
 
-        taxAssessment.setAssessDate(LocalDate.now());
+        taxAssessment.setAssessedDate(LocalDate.now());
         taxAssessment.setImportDeclaration(importDeclaration);
         taxAssessmentRepository.save(taxAssessment);
 
         return ("Tax assessment saved successfully");
+    }
+
+    public List <TaxAssessment> getByImporter(String tinNumber)
+    {
+        return  taxAssessmentRepository.findAssessmentsByTinNumber(tinNumber);
     }
 
 }

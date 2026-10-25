@@ -22,7 +22,7 @@ public class TaxAssessment {
     private String remarks;
 
     private int amount ;
-    private LocalDate assessDate;
+    private LocalDate assessedDate;
 
     @ManyToOne
     @JoinColumn(name = "import_declaration_id")
@@ -60,13 +60,7 @@ public class TaxAssessment {
         this.amount = amount;
     }
 
-    public LocalDate getAssessDate() {
-        return assessDate;
-    }
-
-    public void setAssessDate(LocalDate assessDate) {
-        this.assessDate = assessDate;
-    }
+    
 
     public ImportDeclaration getImportDeclaration() {
         return importDeclaration;
@@ -74,6 +68,14 @@ public class TaxAssessment {
 
     public void setImportDeclaration(ImportDeclaration importDeclaration) {
         this.importDeclaration = importDeclaration;
+    }
+
+    public LocalDate getAssessedDate() {
+        return assessedDate;
+    }
+
+    public void setAssessedDate(LocalDate assessedDate) {
+        this.assessedDate = assessedDate;
     }
 
 }

@@ -1,10 +1,13 @@
 package rw.auca.import_product_tax_system.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +40,12 @@ public class TaxAssessmentController {
         }
 
         return  new ResponseEntity<>(message , HttpStatus.CREATED);
+    }
+
+    @GetMapping ("/importer/{tinNumber}")
+    public ResponseEntity <List<TaxAssessment>> getByImporter(@PathVariable String tinNumber)
+    {
+        return new ResponseEntity<>(taxAssessmentService.getByImporter(tinNumber) ,HttpStatus.OK);
     }
     
 }

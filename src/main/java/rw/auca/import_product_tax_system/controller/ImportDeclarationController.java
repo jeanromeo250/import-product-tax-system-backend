@@ -85,18 +85,20 @@ public class ImportDeclarationController {
 
 
     @DeleteMapping ("/delete/{id}")
-    public  ResponseEntity <String> delete (@PathVariable  UUID id)
+    public ResponseEntity <String> delete (@PathVariable UUID id)
     {
-        String message  = importDeclarationService.delete(id);
+        String message = importDeclarationService.delete(id);
 
-        if(message.equals("The import declaration with that id does not exist"))
+        if(message.equals("The imports declaration with that id does not exist"))
         {
-            return  new ResponseEntity<> (message , HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(message , HttpStatus.NOT_FOUND);
         }
 
+        if(message.equals("That import declaration has tax assessments , delete them first"))
+        {
+            return  new ResponseEntity<>(message ,HttpStatus.CONFLICT);
+        }
         return new ResponseEntity<>(message , HttpStatus.OK);
-
-
     }
 
 
@@ -137,7 +139,5 @@ public class ImportDeclarationController {
         return new ResponseEntity<>(message ,HttpStatus.OK);
 
     }
-
-
 
 }

@@ -51,4 +51,17 @@ public class TaxAssessmentService {
         return  taxAssessmentRepository.findAssessmentsByTinNumber(tinNumber);
     }
 
+
+    public String delete(UUID id)
+    {
+      if(!taxAssessmentRepository.existsById(id))
+      {
+       
+        return  "The tax assessment with that id does not exist";
+      }
+      taxAssessmentRepository.deleteById(id);
+      return  "Tax assessment deleted successfully";
+    }
+    
+
 }

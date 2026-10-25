@@ -11,12 +11,16 @@ import org.springframework.stereotype.Service;
 import rw.auca.import_product_tax_system.domain.DeclarationStatus;
 import rw.auca.import_product_tax_system.domain.ImportDeclaration;
 import rw.auca.import_product_tax_system.repository.ImportDeclarationRepository;
+import rw.auca.import_product_tax_system.repository.TaxAssessmentRepository;
 
 @Service 
 public class ImportDeclarationService {
     
     @Autowired 
     private ImportDeclarationRepository importDeclarationRepository;
+
+    @Autowired 
+    private TaxAssessmentRepository taxAssessmentRepository;
 
     public String save(ImportDeclaration importDeclaration)
     {
@@ -75,10 +79,17 @@ public class ImportDeclarationService {
     }
 
     public  String delete(UUID id){
-        if(!importDeclarationRepository.existsById(id))
+        Optional <ImportDeclaration>  found = importDeclarationRepository.findById(id);
+
+        if(found.isEmpty())
         {
             return "The import declaration with that id does not exist";
+        }
 
+         if (taxAssessmentRepository.existsByImportDeclaration(found.get()))
+            
+        {
+            return "That import declaration has tax assessments, delete them first";
         }
 
         importDeclarationRepository.deleteById(id);
@@ -130,5 +141,9 @@ public class ImportDeclarationService {
                            
         
     }
+
+
+
+
 
 }

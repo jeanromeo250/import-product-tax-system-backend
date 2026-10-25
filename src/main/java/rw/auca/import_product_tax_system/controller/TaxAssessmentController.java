@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,5 +48,20 @@ public class TaxAssessmentController {
     {
         return new ResponseEntity<>(taxAssessmentService.getByImporter(tinNumber) ,HttpStatus.OK);
     }
+    
+
+    @DeleteMapping ("/delete/{id}")
+    public ResponseEntity <String> delete (@PathVariable  UUID id)
+    {
+        String  message =  taxAssessmentService.delete(id);
+
+        if(message.equals("The tax assessment with that id does not exit"))
+        {
+            return new ResponseEntity<>(message , HttpStatus.NOT_FOUND);
+        }
+
+        return  new ResponseEntity<>(message , HttpStatus.OK);
+    }
+
     
 }

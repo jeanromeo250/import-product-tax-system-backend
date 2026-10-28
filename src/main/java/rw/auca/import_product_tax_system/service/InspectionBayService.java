@@ -38,7 +38,6 @@ public class InspectionBayService {
 
         if(found.isEmpty())
         {
-            return "The inpection bay with that i does not exist";
         }
 
         InspectionBay inspectionBay = found.get();
@@ -53,7 +52,6 @@ public class InspectionBayService {
     {
         if(!inspectionBayRepository.existsById(id))
         {
-            return  "The inspection bayy with that id does not exists";
         }
 
         inspectionBayRepository.deleteById(id);

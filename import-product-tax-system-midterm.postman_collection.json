@@ -1,0 +1,126 @@
+{
+  "info": {
+    "_postman_id": "f169463e-6941-4c12-8fdb-85cbd613f1a0",
+    "name": "Import Product Tax System - Midterm",
+    "description": "Assignment API requests. Run A2 save requests first, then use each resource's /all request to copy generated UUIDs into the collection variables before testing related requests. Update declarationDate to today or a future date for D1.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8082" },
+    { "key": "productCategoryId", "value": "replace-with-product-category-uuid" },
+    { "key": "inspectionBayId", "value": "replace-with-inspection-bay-uuid" },
+    { "key": "customsOfficerId", "value": "replace-with-customs-officer-uuid" },
+    { "key": "otherCustomsOfficerId", "value": "replace-with-another-customs-officer-uuid" },
+    { "key": "importerId", "value": "replace-with-importer-uuid" },
+    { "key": "importDeclarationId", "value": "replace-with-cleared-declaration-uuid" },
+    { "key": "nonClearedDeclarationId", "value": "replace-with-submitted-declaration-uuid" },
+    { "key": "taxAssessmentId", "value": "replace-with-tax-assessment-uuid" },
+    { "key": "tinNumber", "value": "replace-with-importer-tin" },
+    { "key": "declarationDate", "value": "2026-10-28" },
+    { "key": "pastDate", "value": "2026-10-20" }
+  ],
+  "item": [
+    {
+      "name": "A2 - Product categories",
+      "item": [
+        { "name": "A2 - Save product category", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Electronics\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/product-categories/save" } },
+        { "name": "A2 - Get all product categories", "request": { "method": "GET", "url": "{{baseUrl}}/api/product-categories/all" } },
+        { "name": "A2 - Get product category by ID", "request": { "method": "GET", "url": "{{baseUrl}}/api/product-categories/{{productCategoryId}}" } },
+        { "name": "A2 - Update product category", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Electronics\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/product-categories/update/{{productCategoryId}}" } },
+        { "name": "A2 - Delete product category", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/product-categories/delete/{{productCategoryId}}" } }
+      ]
+    },
+    {
+      "name": "A2 - Inspection bays",
+      "item": [
+        { "name": "A2 - Save inspection bay", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"bayNumber\": 1,\n  \"name\": \"Bay 1\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/inspection-bays/save" } },
+        { "name": "A2 - Get all inspection bays", "request": { "method": "GET", "url": "{{baseUrl}}/api/inspection-bays/all" } },
+        { "name": "A2 - Get inspection bay by ID", "request": { "method": "GET", "url": "{{baseUrl}}/api/inspection-bays/{{inspectionBayId}}" } },
+        { "name": "A2 - Update inspection bay", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"bayNumber\": 1,\n  \"name\": \"Bay 1\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/inspection-bays/update/{{inspectionBayId}}" } },
+        { "name": "A2 - Delete inspection bay", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/inspection-bays/delete/{{inspectionBayId}}" } }
+      ]
+    },
+    {
+      "name": "A2 - Customs officers",
+      "item": [
+        { "name": "A2 - Save customs officer", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"Jean\",\n  \"lastName\": \"Officer\",\n  \"email\": \"jean.officer@example.com\",\n  \"inspectionBay\": { \"id\": \"{{inspectionBayId}}\" },\n  \"productCategories\": [{ \"id\": \"{{productCategoryId}}\" }]\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/customs-officers/save" } },
+        { "name": "A2 - Get all customs officers", "request": { "method": "GET", "url": "{{baseUrl}}/api/customs-officers/all" } },
+        { "name": "A2 - Get customs officer by ID", "request": { "method": "GET", "url": "{{baseUrl}}/api/customs-officers/{{customsOfficerId}}" } },
+        { "name": "A2 - Update customs officer", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"Jean\",\n  \"lastName\": \"Officer\",\n  \"email\": \"jean.officer@example.com\",\n  \"inspectionBay\": { \"id\": \"{{inspectionBayId}}\" },\n  \"productCategories\": [{ \"id\": \"{{productCategoryId}}\" }]\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/customs-officers/update/{{customsOfficerId}}" } },
+        { "name": "A2 - Delete customs officer", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/customs-officers/delete/{{customsOfficerId}}" } }
+      ]
+    },
+    {
+      "name": "A2 - Importers",
+      "item": [
+        { "name": "A2 - Save importer", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"companyName\": \"Kigali Traders\",\n  \"contactPerson\": \"Aline Example\",\n  \"tinNumber\": \"102345678\",\n  \"phone\": \"0788000000\",\n  \"email\": \"aline@example.com\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/importers/save" } },
+        { "name": "A2 - Get all importers", "request": { "method": "GET", "url": "{{baseUrl}}/api/importers/all" } },
+        { "name": "A2 - Get importer by ID", "request": { "method": "GET", "url": "{{baseUrl}}/api/importers/{{importerId}}" } },
+        { "name": "A2 - Update importer", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"companyName\": \"Kigali Traders\",\n  \"contactPerson\": \"Aline Example\",\n  \"tinNumber\": \"102345678\",\n  \"phone\": \"0788000000\",\n  \"email\": \"aline@example.com\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/importers/update/{{importerId}}" } },
+        { "name": "A2 - Delete importer", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/importers/delete/{{importerId}}" } }
+      ]
+    },
+    {
+      "name": "A2 - Import declarations",
+      "item": [
+        { "name": "A2 - Save import declaration", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"declarationDate\": \"{{declarationDate}}\",\n  \"status\": \"SUBMITTED\",\n  \"productName\": \"Laptop\",\n  \"declaredValue\": 1800000,\n  \"importer\": { \"id\": \"{{importerId}}\" },\n  \"customsOfficer\": { \"id\": \"{{customsOfficerId}}\" }\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/import-declarations/save" } },
+        { "name": "A2 - Get all import declarations", "request": { "method": "GET", "url": "{{baseUrl}}/api/import-declarations/all" } },
+        { "name": "A2 - Get import declaration by ID", "request": { "method": "GET", "url": "{{baseUrl}}/api/import-declarations/{{importDeclarationId}}" } },
+        { "name": "A2 - Update import declaration", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"declarationDate\": \"{{declarationDate}}\",\n  \"productName\": \"Laptop\",\n  \"declaredValue\": 1800000,\n  \"importer\": { \"id\": \"{{importerId}}\" },\n  \"customsOfficer\": { \"id\": \"{{customsOfficerId}}\" }\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/import-declarations/update/{{importDeclarationId}}" } },
+        { "name": "A2 - Delete import declaration", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/import-declarations/delete/{{importDeclarationId}}" } }
+      ]
+    },
+    {
+      "name": "B - Derived queries",
+      "item": [
+        { "name": "B1 - Importers by company name", "request": { "method": "GET", "url": "{{baseUrl}}/api/importers/by-company-name?companyName=Kigali%20Traders" } },
+        { "name": "B2 - Declarations by status", "request": { "method": "GET", "url": "{{baseUrl}}/api/import-declarations/by-status?status=SUBMITTED" } },
+        { "name": "B3 - Declarations between dates", "request": { "method": "GET", "url": "{{baseUrl}}/api/import-declarations/between?start=2026-10-01&end=2026-10-31" } }
+      ]
+    },
+    {
+      "name": "C - JPQL queries",
+      "item": [
+        { "name": "C1 - Customs officers by product category", "request": { "method": "GET", "url": "{{baseUrl}}/api/customs-officers/by-product-category?name=elec" } },
+        { "name": "C2 - Free inspection bays", "request": { "method": "GET", "url": "{{baseUrl}}/api/inspection-bays/free" } },
+        { "name": "C3 - Unused product categories", "request": { "method": "GET", "url": "{{baseUrl}}/api/product-categories/unused" } },
+        { "name": "C4 - Importers of customs officer", "request": { "method": "GET", "url": "{{baseUrl}}/api/importers/of-customs-officer/{{customsOfficerId}}" } }
+      ]
+    },
+    {
+      "name": "D - Business rules",
+      "item": [
+        { "name": "D1 - Save declaration safely", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"declarationDate\": \"{{declarationDate}}\",\n  \"status\": \"CLEARED\",\n  \"productName\": \"Phone\",\n  \"declaredValue\": 600000,\n  \"importer\": { \"id\": \"{{importerId}}\" },\n  \"customsOfficer\": { \"id\": \"{{customsOfficerId}}\" }\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/import-declarations/save" } },
+        { "name": "D1 - Reject duplicate officer and date", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"declarationDate\": \"{{declarationDate}}\",\n  \"productName\": \"Duplicate-date test\",\n  \"declaredValue\": 1000,\n  \"importer\": { \"id\": \"{{importerId}}\" },\n  \"customsOfficer\": { \"id\": \"{{customsOfficerId}}\" }\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/import-declarations/save" } },
+        { "name": "D1 - Reject declaration dated in the past", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"declarationDate\": \"{{pastDate}}\",\n  \"productName\": \"Past-date test\",\n  \"declaredValue\": 1000,\n  \"importer\": { \"id\": \"{{importerId}}\" },\n  \"customsOfficer\": { \"id\": \"{{customsOfficerId}}\" }\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/import-declarations/save" } },
+        { "name": "D2 - Change declaration status", "request": { "method": "PATCH", "url": "{{baseUrl}}/api/import-declarations/{{importDeclarationId}}/status?status=UNDER_ASSESSMENT" } },
+        { "name": "D2 - Reject invalid status transition", "request": { "method": "PATCH", "url": "{{baseUrl}}/api/import-declarations/{{importDeclarationId}}/status?status=SUBMITTED" } },
+        { "name": "D3 - Add category to customs officer", "request": { "method": "PUT", "url": "{{baseUrl}}/api/customs-officers/{{customsOfficerId}}/product-categories/{{productCategoryId}}" } },
+        { "name": "D4 - Move customs officer to inspection bay", "request": { "method": "PATCH", "url": "{{baseUrl}}/api/customs-officers/{{customsOfficerId}}/inspection-bay?bayNumber=4" } }
+      ]
+    },
+    {
+      "name": "E - Tax assessments",
+      "item": [
+        { "name": "E1 - Save tax assessment for cleared declaration", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"taxName\": \"Import Duty\",\n  \"remarks\": \"25 percent of CIF value\",\n  \"amount\": 450000\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/tax-assessments/save?importDeclarationId={{importDeclarationId}}" } },
+        { "name": "E1 - Reject tax assessment for non-cleared declaration", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"taxName\": \"Import Duty\",\n  \"remarks\": \"Should be rejected unless declaration is CLEARED\",\n  \"amount\": 450000\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/api/tax-assessments/save?importDeclarationId={{nonClearedDeclarationId}}" } },
+        { "name": "E2 - Tax assessment history by importer TIN", "request": { "method": "GET", "url": "{{baseUrl}}/api/tax-assessments/importer/{{tinNumber}}" } },
+        { "name": "E3 - Delete tax assessment", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/tax-assessments/delete/{{taxAssessmentId}}" } }
+      ]
+    },
+    {
+      "name": "F - Reports and bulk updates",
+      "item": [
+        { "name": "F1 - Declaration statistics by status", "request": { "method": "GET", "url": "{{baseUrl}}/api/import-declarations/stats/by-status" } },
+        { "name": "F2 - Cancel declarations for absent officer", "request": { "method": "PATCH", "url": "{{baseUrl}}/api/import-declarations/cancel-day?customsOfficerId={{customsOfficerId}}&date=2026-10-20" } }
+      ]
+    },
+    {
+      "name": "Bonus",
+      "item": [
+        { "name": "Bonus - Dashboard summary", "request": { "method": "GET", "url": "{{baseUrl}}/api/dashboard/summary" } },
+        { "name": "Bonus - Page through declarations", "request": { "method": "GET", "url": "{{baseUrl}}/api/import-declarations/page?page=0&size=5&sort=declarationDate,desc" } }
+      ]
+    }
+  ]
+}

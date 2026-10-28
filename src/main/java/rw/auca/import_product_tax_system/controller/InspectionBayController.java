@@ -21,7 +21,7 @@ import rw.auca.import_product_tax_system.domain.InspectionBay;
 import rw.auca.import_product_tax_system.service.InspectionBayService;
 
 @RestController 
-@RequestMapping ("/api/inspectionBays")
+@RequestMapping ("/api/inspection-bays")
 
 public class InspectionBayController {
     @Autowired 

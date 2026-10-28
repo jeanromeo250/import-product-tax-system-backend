@@ -2,8 +2,12 @@
 
 MID TERM EXAM OF WEBTECH 
 
+<<<<<<< HEAD
+Student: NUWOKWIZERWA Jean Romeo
+=======
 Student: NUWOKWIZERWA J Romeo
 
+>>>>>>> d336806788279ac7b79d0826e7722e988c6afdcb
 Student ID: 27671
 
 Lecturer: Patrick DUSHIMIMANA
@@ -45,7 +49,12 @@ This is a REST API for managing imported goods and their taxes. It keeps track o
 
 ## Testing
 
-The Postman collection is in the project root: `import-product-tax-system-midterm.postman_collection.json`. Import it in Postman. Each request is named after the requirement it covers (A2, B1, C4, D2 and so on).
+The Postman collection is in the project root: `import-product-tax-system-midterm.postman_collection.json`.
+
+1. Import the collection into Postman.
+2. Run the A2 save requests and use each `/all` response to copy the generated UUIDs into the collection variables before running requests that need related records.
+3. Use a declaration date that is today or later for successful D1 requests. The collection includes past-date and duplicate-date examples for the expected error responses.
+4. Run each request named by its assignment requirement (A2, B1, C4, D2 and so on).
 
 ## Main endpoints
 

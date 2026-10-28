@@ -2,12 +2,7 @@
 
 MID TERM EXAM OF WEBTECH 
 
-<<<<<<< HEAD
 Student: NUWOKWIZERWA Jean Romeo
-=======
-Student: NUWOKWIZERWA J Romeo
-
->>>>>>> d336806788279ac7b79d0826e7722e988c6afdcb
 Student ID: 27671
 
 Lecturer: Patrick DUSHIMIMANA
@@ -35,8 +30,8 @@ This is a REST API for managing imported goods and their taxes. It keeps track o
 3. Open `src/main/resources/application.properties` and set your own PostgreSQL username and password:
    ```properties
    spring.datasource.url=jdbc:postgresql://localhost:5432/import_product_tax_db
-   spring.datasource.username=YOUR_USERNAME
-   spring.datasource.password=YOUR_PASSWORD
+   spring.datasource.username=romeo
+   spring.datasource.password=romeo123
    server.port=8082
    spring.jpa.hibernate.ddl-auto=update
    ```
